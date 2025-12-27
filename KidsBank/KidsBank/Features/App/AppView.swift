@@ -100,5 +100,8 @@ struct AppView: View {
                 ChildDetailView(store: childStore)
             }
         }
+        .fullScreenCover(item: $store.scope(state: \.addChild, action: \.addChild)) { store in
+            AddChildView(store: store)
+        }
     }
 }

@@ -9,6 +9,7 @@ struct AppFeature {
         var path = StackState<Path.State>()
         var childToDelete: IndexSet?
         @Presents var alert: AlertState<Action.Alert>?
+        @Presents var addChild: AddChildFeature.State?
     }
     
     enum Action {
@@ -17,6 +18,7 @@ struct AppFeature {
         case childCardTapped(ChildFeature.State)
         case deleteChildTapped(IndexSet)
         case alert(PresentationAction<Alert>)
+        case addChild(PresentationAction<AddChildFeature.Action>)
         
         enum Alert: Equatable {
             case confirmDeletion
@@ -32,10 +34,21 @@ struct AppFeature {
         Reduce { state, action in
             switch action {
             case .addChildTapped:
-                let newChild = ChildFeature.State(id: UUID(), name: "New Child")
-                state.path.append(.childDetail(newChild))
-//
-//                state.children.append(newChild)
+                state.addChild = AddChildFeature.State()
+                return .none
+                
+            case let .addChild(.presented(.delegate(.saveChild(name, themeColor, avatar, avatarData)))):
+                let newChild = ChildFeature.State(
+                    id: UUID(),
+                    name: name,
+                    themeColor: themeColor,
+                    avatar: avatar,
+                    avatarData: avatarData
+                )
+                state.children.append(newChild)
+                return .none
+                
+            case .addChild:
                 return .none
                 
             case let .childCardTapped(child):
@@ -74,28 +87,12 @@ struct AppFeature {
         }
         .forEach(\.path, action: \.path)
         .ifLet(\.$alert, action: \.alert)
-        Reduce { state, action in
-            switch action {
-            case let .path(.element(id: stackID, action: .childDetail(.delegate(.deleteChild)))):
-                guard case let .childDetail(childState) = state.path[id: stackID] else { return .none }
-                state.children.remove(id: childState.id)
-                state.path.pop(from: stackID)
-                return .none
-                
-            case let .path(.element(id: stackID, action: .childDetail(_))):
-                guard case let .childDetail(childState) = state.path[id: stackID] else { return .none }
-                if state.children[id: childState.id] != nil {
-                    state.children[id: childState.id] = childState
-                }
-                return .none
-                
-            default:
-                return .none
-            }
+        .ifLet(\.$addChild, action: \.addChild) {
+            AddChildFeature()
         }
+        AppRoutingFeature()
     }
 }
-// sdfsdf
 
 
 extension AppFeature.Path.State: Equatable {}
