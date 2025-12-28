@@ -9,7 +9,7 @@ struct ChildRowView: View {
             Text(child.name)
                 .font(.headline)
             Spacer()
-            Text(child.balance, format: .currency(code: "USD"))
+            Text(child.balance, format: .currency(code: "ILS"))
                 .bold()
                 .foregroundStyle(child.balance >= 0 ? .green : .red)
         }

@@ -15,7 +15,7 @@ struct TransactionRowView: View {
             
             Spacer()
             
-            Text(transaction.amount, format: .currency(code: "USD"))
+            Text(transaction.amount, format: .currency(code: "ILS"))
                 .foregroundStyle(transaction.type == .income ? .green : .red)
                 .bold()
         }

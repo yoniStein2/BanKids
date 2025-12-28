@@ -37,7 +37,7 @@ struct ChildDetailView: View {
                 HStack {
                     Text("Current Balance")
                     Spacer()
-                    Text(store.balance, format: .currency(code: "USD"))
+                    Text(store.balance, format: .currency(code: "ILS"))
                         .bold()
                         .foregroundStyle(store.balance >= 0 ? .green : .red)
                         .font(.title2)
