@@ -51,7 +51,7 @@ struct ChildCardView: View {
         .frame(width: 250, height: 400)
         .background(child.themeColor.color)
         .clipShape(RoundedRectangle(cornerRadius: 40, style: .continuous))
-        .shadow(color: child.themeColor.color.opacity(0.4), radius: 15, x: 0, y: 10)
+        .shadow(color: .black.opacity(0.8), radius: 10, x: 0, y: 10)
         .overlay(
             RoundedRectangle(cornerRadius: 40, style: .continuous)
                 .stroke(.white.opacity(0.3), lineWidth: 1)

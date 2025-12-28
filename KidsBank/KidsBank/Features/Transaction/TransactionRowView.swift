@@ -8,9 +8,6 @@ struct TransactionRowView: View {
             VStack(alignment: .leading) {
                 Text(transaction.description)
                     .font(.headline)
-                Text(transaction.date, style: .date)
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
             }
             
             Spacer()

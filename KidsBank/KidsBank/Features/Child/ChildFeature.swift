@@ -75,6 +75,7 @@ struct ChildFeature {
         case addTransactionButtonTapped
         case editNameButtonTapped
         case deleteTransaction(IndexSet)
+        case deleteTransactionWithId(UUID)
         case addTransaction(PresentationAction<TransactionFormFeature.Action>)
         case editChild(PresentationAction<EditChildFeature.Action>)
         case setAvatarData(Data?)
@@ -119,6 +120,10 @@ struct ChildFeature {
                 
             case let .deleteTransaction(indexSet):
                 state.transactions.remove(atOffsets: indexSet)
+                return .none
+
+            case let .deleteTransactionWithId(id):
+                state.transactions.remove(id: id)
                 return .none
                 
             case let .addTransaction(.presented(.delegate(.saveTransaction(transaction)))):

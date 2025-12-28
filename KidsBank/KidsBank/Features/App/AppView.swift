@@ -20,8 +20,8 @@ struct AppView: View {
                         .resizable()
                         .scaledToFit()
                         .padding(.horizontal, 40)
-                        .padding(.top, 20)
-                        .padding(.bottom, 10)
+                        .padding(.top, 30)
+                        .padding(.bottom, 30)
                     
                     if !store.children.isEmpty {
                         ScrollView(.horizontal, showsIndicators: false) {
@@ -46,7 +46,7 @@ struct AppView: View {
                             .scrollTargetLayout()
                         }
                         .scrollTargetBehavior(.viewAligned)
-                        .contentMargins(60, for: .scrollContent)
+                        .contentMargins(80, for: .scrollContent)
                     } else {
                         Spacer()
                         VStack {
