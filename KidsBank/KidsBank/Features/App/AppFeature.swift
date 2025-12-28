@@ -19,6 +19,9 @@ struct AppFeature {
         case deleteChildTapped(IndexSet)
         case alert(PresentationAction<Alert>)
         case addChild(PresentationAction<AddChildFeature.Action>)
+        case onAppear
+        case childrenLoaded(IdentifiedArrayOf<ChildFeature.State>)
+        case saveChildren
         
         enum Alert: Equatable {
             case confirmDeletion
@@ -29,10 +32,36 @@ struct AppFeature {
     enum Path {
         case childDetail(ChildFeature)
     }
+    
+    @Dependency(\.dataPersistence) var dataPersistence
         
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
+            case .onAppear:
+                return .run { send in
+                    do {
+                        let children = try await dataPersistence.loadChildren()
+                        await send(.childrenLoaded(children))
+                    } catch {
+                        print("Failed to load children: \(error)")
+                    }
+                }
+                
+            case let .childrenLoaded(children):
+                state.children = children
+                return .none
+                
+            case .saveChildren:
+                let children = state.children
+                return .run { _ in
+                    do {
+                        try await dataPersistence.saveChildren(children)
+                    } catch {
+                        print("Failed to save children: \(error)")
+                    }
+                }
+                
             case .addChildTapped:
                 state.addChild = AddChildFeature.State()
                 return .none
@@ -46,7 +75,7 @@ struct AppFeature {
                     avatarData: avatarData
                 )
                 state.children.append(newChild)
-                return .none
+                return .send(.saveChildren)
                 
             case .addChild:
                 return .none
@@ -76,7 +105,7 @@ struct AppFeature {
                     state.children.remove(atOffsets: indexSet)
                 }
                 state.childToDelete = nil
-                return .none
+                return .send(.saveChildren)
                 
             case .alert:
                 return .none

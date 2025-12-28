@@ -1,6 +1,6 @@
 //
 //  Color.swift
-//  KidsBank
+//  BanKids
 //
 //  Created by Yoni Stein on 11/12/2025.
 //

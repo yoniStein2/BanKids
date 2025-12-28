@@ -2,7 +2,7 @@ import SwiftUI
 import ComposableArchitecture
 
 @main
-struct KidsBankApp: App {
+struct BanKidsApp: App {
     var body: some Scene {
         WindowGroup {
             AppView(

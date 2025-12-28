@@ -13,12 +13,13 @@ struct AppRoutingFeature: Reducer {
                 guard case let .childDetail(childState) = state.path[id: stackID] else { return .none }
                 state.children.remove(id: childState.id)
                 state.path.pop(from: stackID)
-                return .none
+                return .send(.saveChildren)
                 
             case let .path(.element(id: stackID, action: .childDetail(_))):
                 guard case let .childDetail(childState) = state.path[id: stackID] else { return .none }
                 if state.children[id: childState.id] != nil {
                     state.children[id: childState.id] = childState
+                    return .send(.saveChildren)
                 }
                 return .none
                 

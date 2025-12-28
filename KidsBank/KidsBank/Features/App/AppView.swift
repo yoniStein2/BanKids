@@ -94,6 +94,9 @@ struct AppView: View {
             }
             .toolbar(.hidden, for: .navigationBar)
             .alert($store.scope(state: \.alert, action: \.alert))
+            .onAppear {
+                store.send(.onAppear)
+            }
         } destination: { store in
             switch store.case {
             case let .childDetail(childStore):
