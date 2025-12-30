@@ -119,7 +119,7 @@ struct AppFeature {
         .ifLet(\.$addChild, action: \.addChild) {
             AddChildFeature()
         }
-        AppRoutingFeature()
+        RoutingFeature()
     }
 }
 

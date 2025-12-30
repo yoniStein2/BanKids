@@ -2,7 +2,7 @@ import ComposableArchitecture
 import SwiftUI
 
 @Reducer
-struct TransactionFormFeature {
+struct TransactionFeature {
     @ObservableState
     struct State: Equatable, Hashable {
         var transaction: Transaction

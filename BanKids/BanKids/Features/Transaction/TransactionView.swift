@@ -1,8 +1,8 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct AddTransactionView: View {
-    @Bindable var store: StoreOf<TransactionFormFeature>
+struct TransactionView: View {
+    @Bindable var store: StoreOf<TransactionFeature>
     @FocusState private var isAmountFocused: Bool
     
     var body: some View {
@@ -20,7 +20,7 @@ struct AddTransactionView: View {
                                 .frame(width: 60, height: 60)
                                 .shadow(color: store.transaction.type == .income ? .green.opacity(0.4) : .clear, radius: 8, y: 4)
                             
-                            Image(systemName: "arrow.down.left")
+                            Image(systemName: "arrow.up.right")
                                 .font(.system(size: 24, weight: .bold))
                                 .foregroundStyle(store.transaction.type == .income ? .white : .gray)
                         }
@@ -43,7 +43,7 @@ struct AddTransactionView: View {
                                 .frame(width: 60, height: 60)
                                 .shadow(color: store.transaction.type == .outcome ? .red.opacity(0.4) : .clear, radius: 8, y: 4)
                             
-                            Image(systemName: "arrow.up.right")
+                            Image(systemName: "arrow.down.left")
                                 .font(.system(size: 24, weight: .bold))
                                 .foregroundStyle(store.transaction.type == .outcome ? .white : .gray)
                         }

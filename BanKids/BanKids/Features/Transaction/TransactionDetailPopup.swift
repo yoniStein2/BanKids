@@ -12,7 +12,7 @@ struct TransactionDetailPopup: View {
                     .fill(transaction.type == .income ? Color.green.opacity(0.1) : Color.red.opacity(0.1))
                     .frame(width: 80, height: 80)
                 
-                Image(systemName: transaction.type == .income ? "arrow.down.left" : "arrow.up.right")
+                Image(systemName: transaction.type == .income ? "arrow.up.right" : "arrow.down.left")
                     .font(.system(size: 32, weight: .bold))
                     .foregroundStyle(transaction.type == .income ? .green : .red)
             }

@@ -21,7 +21,7 @@ struct AppView: View {
                         .scaledToFit()
                         .padding(.horizontal, 40)
                         .padding(.top, 30)
-                        .padding(.bottom, 30)
+                        .padding(.bottom, 50)
                     
                     if !store.children.isEmpty {
                         ScrollView(.horizontal, showsIndicators: false) {
@@ -33,20 +33,21 @@ struct AppView: View {
                                         ChildCardView(child: child)
                                     }
                                     .buttonStyle(.plain)
-                                    .containerRelativeFrame(.horizontal, count: 1, spacing: 0)
+                                    .containerRelativeFrame(.horizontal) { width, _ in
+                                        width - 20
+                                    }
                                     .scrollTransition { content, phase in
                                         content
-                                            .opacity(phase.isIdentity ? 1.0 : 0.6)
-                                            .scaleEffect(phase.isIdentity ? 1.0 : 0.5)
+                                            .opacity(phase.isIdentity ? 1.0 : 0.8)
+                                            .scaleEffect(phase.isIdentity ? 1.0 : 0.9)
                                             .blur(radius: phase.isIdentity ? 0 : 2)
                                     }
                                 }
                             }
-                            .padding()
                             .scrollTargetLayout()
                         }
                         .scrollTargetBehavior(.viewAligned)
-                        .contentMargins(80, for: .scrollContent)
+                        .contentMargins(40, for: .scrollContent)
                     } else {
                         Spacer()
                         VStack {
@@ -100,7 +101,7 @@ struct AppView: View {
         } destination: { store in
             switch store.case {
             case let .childDetail(childStore):
-                ChildDetailView(store: childStore)
+                ChildView(store: childStore)
             }
         }
         .fullScreenCover(item: $store.scope(state: \.addChild, action: \.addChild)) { store in

@@ -11,7 +11,7 @@ struct ChildFeature {
         var avatar: Avatar = .boy
         var avatarData: Data? = nil
         var transactions: IdentifiedArrayOf<Transaction> = []
-        @Presents var addTransaction: TransactionFormFeature.State?
+        @Presents var addTransaction: TransactionFeature.State?
         @Presents var editChild: EditChildFeature.State?
         
         enum Avatar: String, Codable, Equatable, Hashable, CaseIterable {
@@ -76,7 +76,7 @@ struct ChildFeature {
         case editNameButtonTapped
         case deleteTransaction(IndexSet)
         case deleteTransactionWithId(UUID)
-        case addTransaction(PresentationAction<TransactionFormFeature.Action>)
+        case addTransaction(PresentationAction<TransactionFeature.Action>)
         case editChild(PresentationAction<EditChildFeature.Action>)
         case setAvatarData(Data?)
         case delegate(Delegate)
@@ -105,7 +105,7 @@ struct ChildFeature {
                 return .none
 
             case .addTransactionButtonTapped:
-                state.addTransaction = TransactionFormFeature.State(transaction: Transaction(id: UUID(), amount: 0, description: "", date: Date(), type: .income))
+                state.addTransaction = TransactionFeature.State(transaction: Transaction(id: UUID(), amount: 0, description: "", date: Date(), type: .income))
                 return .none
                 
             case let .editChild(.presented(.delegate(.saveChild(name, themeColor, avatar, avatarData)))):
@@ -135,7 +135,7 @@ struct ChildFeature {
             }
         }
         .ifLet(\.$addTransaction, action: \.addTransaction) {
-            TransactionFormFeature()
+            TransactionFeature()
         }
         .ifLet(\.$editChild, action: \.editChild) {
             EditChildFeature()

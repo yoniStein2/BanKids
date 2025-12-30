@@ -2,7 +2,7 @@ import SwiftUI
 import ComposableArchitecture
 import PhotosUI
 
-struct ChildDetailView: View {
+struct ChildView: View {
     @Bindable var store: StoreOf<ChildFeature>
     @State private var selectedTransaction: Transaction?
     @State private var avatarItem: PhotosPickerItem?
@@ -129,7 +129,7 @@ struct ChildDetailView: View {
             }
             .sheet(item: $store.scope(state: \.addTransaction, action: \.addTransaction)) { store in
                 NavigationStack {
-                    AddTransactionView(store: store)
+                    TransactionView(store: store)
                 }
             }
             

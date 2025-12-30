@@ -2,7 +2,7 @@ import ComposableArchitecture
 
 /// A reducer that handles routing logic for child detail navigation
 /// Syncs child state changes from the navigation stack back to the children array
-struct AppRoutingFeature: Reducer {
+struct RoutingFeature: Reducer {
     typealias State = AppFeature.State
     typealias Action = AppFeature.Action
     
